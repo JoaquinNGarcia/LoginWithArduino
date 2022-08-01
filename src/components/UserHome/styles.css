@@ -1,0 +1,43 @@
+.form-fecha {
+  border: solid;
+  border-color: black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-top: 50px;
+  width: 300px;
+  padding-bottom: 10px;
+}
+
+.input-container {
+  width: 80%;
+}
+
+.button {
+  width: 80%;
+  align-self: center;
+}
+
+.container {
+  width: 300px;
+  border: solid;
+  border-color: black;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.container-all {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.div-valor {
+  border: solid 0.5px;
+  border-color: black;
+  width: 30%;
+  align-self: center;
+}
