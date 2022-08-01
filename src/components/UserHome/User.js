@@ -31,7 +31,7 @@ class UserHome extends Component {
     <Segment>
       <Dimmer>
         <Loader>Loading</Loader>
-        {console.log("renderLoader")}
+        {/* {console.log("renderLoader")} */}
       </Dimmer>
     </Segment>
   );
@@ -44,18 +44,26 @@ class UserHome extends Component {
     fechaMin,
     fechaMax
   ) => {
-    console.log("descargarInformacion");
+    // console.log("descargarInformacion");
     e.preventDefault();
     await this.props.getRegistro({ fechaMin, fechaMax });
-    const registro = this.props.registro;
+    // const registro = this.props.registro;
+    const registro = [
+      {id_sensor: 1, valueSensor: 23, fecha: '2022/08/01', horario: '13:03' },
+      {id_sensor: 10, valueSensor: 1, fecha: '2022/02/10', horario: '03:12' },
+      {id_sensor: 12, valueSensor: 13, fecha: '2022/05/23', horario: '09:43' },
+      {id_sensor: 4, valueSensor: 16, fecha: '2021/12/12', horario: '13:56' },
+      {id_sensor: 8, valueSensor: 35, fecha: '2022/01/09', horario: '32:30' },
+    ]
     var contenido = "";
-    registro.map(item => {
-      return contenido += `${
-        item.id_sensor
-      }: ${item.valueSensor.toString()} °C, Fecha: ${item.fecha}, Horario: ${
-        item.horario
-      } \n`;
-    });
+    !!registro
+      && registro.map(item => {
+        return contenido += `Sensor: ${
+          item.id_sensor
+        } - ${item.valueSensor.toString()} °C, Fecha: ${item.fecha}, Horario: ${
+          item.horario
+        } \n`;
+      });
     if (!contenido.trim())
       contenido = "Los sensores estan desactivados, no se registraron valores";
 
@@ -64,13 +72,12 @@ class UserHome extends Component {
     });
     const element = document.createElement("a");
     element.href = URL.createObjectURL(file);
-    element.download = "myFile.txt";
+    element.download = "RegistroSensores.txt";
     document.body.appendChild(element);
     element.click();
   };
 
   saveRegistro = (temperaturaActual, humedadActual, vientoActual) => {
-    console.log("saveRegistro");
     const {
       guardarRegistro,
       temperaturaAnt,
@@ -80,7 +87,6 @@ class UserHome extends Component {
     const date = new Date();
     const fecha = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
     const horario = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
-    console.log('date', date + 'fecha', fecha + 'horario', horario);
     if (temperaturaAnt !== temperaturaActual) {
       guardarRegistro({
         id_sensor: "temperatura",
@@ -108,18 +114,22 @@ class UserHome extends Component {
   };
 
   render() {
-    const {
-      sensores,
-      user,
-      registroInProgress ,
-      estadoTemp,
-      estadoHum,
-      estadoViento
-    } = this.props;
+    // const {
+      // sensores,
+      // user,
+      // registroInProgress ,
+      // estadoTemp,
+      // estadoHum,
+      // estadoViento
+    // } = this.props;
     const temperatura = 4
     const viento = 40
     const humedad = 83
     
+    const estadoTemp = false;
+    const estadoHum = false;
+    const estadoViento = false;
+
     // if ((!user && !sensores) || registroInProgress) {
     //   return this.renderLoader();
     // } else {
@@ -137,29 +147,21 @@ class UserHome extends Component {
       // );
       // const humedad = Math.round(this.props.humedad * sensorHumedad.factor);
       // const viento = Math.round(this.props.viento * sensorViento.factor);
-      // this.saveRegistro(temperatura, humedad, viento);
-      // if (
-      //   temperatura > sensorTemperatura.max_value ||
-      //   temperatura < sensorTemperatura.min_value
-      // )
-      //   this.props.sendMail("temperatura");
-      // if (
-      //   humedad > sensorHumedad.max_value ||
-      //   humedad < sensorHumedad.min_value
-      // )
-      //   this.props.sendMail("humedad");
-      // if (viento > sensorViento.max_value || viento < sensorViento.min_value)
-      //   this.props.sendMail("viento");
-      const date = new Date();
-      const fecha = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-      const horario = `${date.getHours()}:${date.getMinutes()}:${date.getSeconds()}`;
+
+      const sensorTemperatura = [ {min_value:-50, max_value:50} ]
+      const sensorHumedad = [ {min_value:-1, max_value:100} ]
+      const sensorViento = [ {min_value:0, max_value:80} ]
+      this.saveRegistro(temperatura, humedad, viento);
+      (temperatura > sensorTemperatura.max_value || temperatura < sensorTemperatura.min_value) && this.props.sendMail("temperatura");
+      
+      (humedad > sensorHumedad.max_value || humedad < sensorHumedad.min_value) && this.props.sendMail("humedad");
+      
+      (viento > sensorViento.max_value || viento < sensorViento.min_value) && this.props.sendMail("viento");
+      
       return (
         <div>
           <div className="container-all">
             <div className="container">
-				{ 
-					console.log('date: ', date + 'fecha: ', fecha + 'horario: ', horario)
-				}
 				<p>Temperatura</p>
 				<div className="div-valor">
 					{estadoTemp ? <p>Desactivado</p> : <p>{temperatura} ºC</p>}

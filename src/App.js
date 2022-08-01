@@ -41,7 +41,7 @@ class App extends Component {
 
   componentDidMount = async () => {
     // const { endpoint } = this.state;
-    //const socket = socketIOClient(endpoint);
+    // const socket = socketIOClient(endpoint);
     // const { temperatura, humedad, viento } = this.state;
     this.socket.on("arduinodata", data => {
       this.setState({
@@ -65,7 +65,7 @@ class App extends Component {
       this.props.setSendTrue(sensor);
       socket.on("connect", function() {
         socket.emit("sendemail", sensor, function(data) {
-          console.log(data); // data will be 'tobi says woot'
+          // console.log(data);
         });
       });
     }

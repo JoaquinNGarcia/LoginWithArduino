@@ -52,6 +52,7 @@ class AdminHome extends Component {
   );
 
   actualizarValores = sensor => {
+    // console.log('sensor: ', sensor);
     this.props.updateSensor(sensor);
   };
   render() {
@@ -71,12 +72,17 @@ class AdminHome extends Component {
     //     // estadoHum,
     //     // estadoViento
     //   } = this.props;
-      const sensorTemperatura=[ {min_value:2, max_value:6, factor:'qwe'} ]
-      const sensorHumedad=[ {min_value:2, max_value:6, factor:'qwe'} ]
-      const sensorViento=[ {min_value:2, max_value:6, factor:'qwe'} ]
-      const estadoTemp=["2", "4", "3"]
+      const sensorTemperatura=[ {min_value:2, max_value:6, factor:'C'} ]
+      const sensorHumedad=[ {min_value:2, max_value:6, factor:'%'} ]
+      const sensorViento=[ {min_value:2, max_value:6, factor:'KM'} ]
+      const totalidadSensores= [sensorTemperatura, sensorHumedad, sensorViento];
+      // const estadoTemp=["2", "4", "3"]
       return (
         <div>
+          <div className="container-sm">
+            <br/>
+            <h3>{`Cantidad de sensores: ${totalidadSensores.length}`}</h3>
+          </div>
           <div className="container-all">
             <div className="container-form">
               <Form
@@ -121,7 +127,7 @@ class AdminHome extends Component {
                     }
                   />
                 </Form.Field>
-                {console.log("Temperatura", estadoTemp)}
+                {/* {console.log("Temperatura", estadoTemp)} */}
                 <label>
                   Desactivar
                   <input
@@ -183,7 +189,7 @@ class AdminHome extends Component {
                     }
                   />
                 </Form.Field>
-                {console.log("Humedad", estadoTemp)}
+                {/* {console.log("Humedad", estadoTemp)} */}
                 <label>
                   Desactivar
                   <input
@@ -244,7 +250,7 @@ class AdminHome extends Component {
                     }
                   />
                 </Form.Field>
-                {console.log("Viento", estadoTemp)}
+                {/* {console.log("Viento", estadoTemp)} */}
                 <label>
                   Desactivar
                   <input
@@ -262,6 +268,7 @@ class AdminHome extends Component {
                   {this.props.saveSensorInProgress ? "Guardando" : "Guardar"}
                 </Button>
               </Form>
+
             </div>
           </div>
         </div>

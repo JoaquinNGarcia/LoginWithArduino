@@ -16,10 +16,6 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get('/', function(req, res) {
-  res.status(200).send("Hello World!");
-})
-
 server.listen(3030, () => {
   console.log("server on port http://localhost:3030", 3030);
 });
@@ -51,7 +47,7 @@ port.on("err", function(err) {
 });
 
 io.on("descargar", contenido => {
-  console.log("descargó");
+  // console.log("descargó");
   fs.writeFile("informacion.txt", contenido, function(err) {
     if (err) {
       return console.log(err);
@@ -82,6 +78,7 @@ cron.schedule("09 15 * * *", function() {
 });
 
 io.on("connection", function(socket) {
+  // console.log('Se conecto con Sockets');
   socket.on("sendemail", function(sensor) {
     /*let transporter = nodeMailer.createTransport({
       host: 'smtp.gmail.com',
@@ -105,6 +102,7 @@ io.on("connection", function(socket) {
       console.log("Message %s sent: %s", info.messageId, info.response);
       res.render("index");
     });*/
+    // console.log('sendemail');
     let transporter = nodeMailer.createTransport({
       host: "smtp-mail.outlook.com",
       secureConnection: false,

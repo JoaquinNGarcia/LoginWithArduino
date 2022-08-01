@@ -40,7 +40,7 @@ export const updateSensor = sensor => async dispatch => {
   dispatch({ type: UPLOAD_SENSOR_INPROGRESS });
   try {
     const res = await axios.put(
-      `http://localhost:3000/sensores/${sensor.id}`,
+      `http://localhost:3000/sensores/${sensor.map((elem, index) => index)}`,
       sensor
     );
     dispatch({
@@ -92,7 +92,7 @@ export const setSendTrue = () => async dispatch => {
 };
 
 export const saveEstadoSensor = payload => async dispatch => {
-  console.log(payload);
+  // console.log(payload);
   dispatch({
     type: SAVE_ESTADO_SENSOR,
     payload
